@@ -3,7 +3,7 @@ services:
   name: devsconnect
   env: python
   buildCommand: "./build.sh"        # ensure it's a string
-  startCommand: cd devsconnect && gunicorn devsconnect.wsgi:application
+  startCommand: gunicorn devsconnect.wsgi:application
   repo: https://github.com/harshhes/DevsConnect.git # optional
   # plan: standard # optional
   healthCheckPath: /
