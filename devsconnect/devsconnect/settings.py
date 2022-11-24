@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url 
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-t_(4i%(=7n2)g6zql^y4)5y$ud)hlogxcq#r*pm88-7(cfn8c2
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['devsconnect.onrender.com','127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
@@ -50,7 +51,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,7 +90,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -131,15 +131,8 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIR = {
-    os.path.join(BASE_DIR, 'public/static')
-}
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
